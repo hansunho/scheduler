@@ -33,6 +33,9 @@ class Simulator {
           int time = 0 ;
           while (!jobSet.isEmpty()) {
                 Job currentJob = jobSet.poll() ;
+                if( time < currentJob.arrivalTime ){
+                  time = currentJob.arrivalTime ; 
+                }
                 if( currentJob.firstTimeScheduled < 0 ){ //first time currentJob has been scheduled
                     currentJob.firstTimeScheduled = time ;
                 }
@@ -42,6 +45,9 @@ class Simulator {
 
                 if( currentJob.timeToCompletion < 1 ){ //currentJob is complete
                   turnaroundTimes.add(time - currentJob.arrivalTime) ;
+                  /*if( !jobSet.isEmpty() ){
+                      time = jobSet.peek().arrivalTime ;
+                  }*/
                 }else if( !jobSet.isEmpty() ){
                     if( (jobSet.peek().arrivalTime == time) &&
                              (jobSet.peek().timeToCompletion <
