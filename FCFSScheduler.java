@@ -41,6 +41,19 @@ public class FCFSScheduler{
 	});
 	}
 		
+/*		//set the process' first run time
+		if (processes[n][2] == -1) processes[n][2] = timeCount;
+		timeCount++;
+		processes[n][1]--;
+		//System.out.println("Job " + n +" has " + processes[n][1] + "left");
+		//if current process is finished
+		if(processes[n][1] == 0){
+			//set the process' completion time
+			processes[n][3] = timeCount;
+			//finished process will have execution time of -1
+			processes[n][1] = -1;		
+			//update the number of total jobs done
+			numOfJobDone++;	}	*/
 
 	//will run a process at processes[n][]
 	public static void runAProcess (int n){
@@ -61,7 +74,7 @@ public class FCFSScheduler{
 		averageTurnaroundTime += processes[i][3] - processes[i][0];
 		averageResponseTime += processes[i][2] - processes[i][0];
 	}
-	averageTurnaroundTime = averageTurnaroundTime/numberOfProcesses;
+	averageTurnaroundTime = (averageTurnaroundTime-processes[0][0])/numberOfProcesses;
 	averageResponseTime = averageResponseTime/numberOfProcesses;
 	}
 
@@ -70,8 +83,8 @@ public class FCFSScheduler{
 	public static void main(String [] args){
 	
 		try	{
-			readFile("C:\\Users\\sun\\Downloads\\bboioi\\workspace\\jobinfo");
-			//readFile(args[1]);//when its running from command line arguments
+			readFile(args[0]);
+			//readFile(args[0]);//when its running from command line arguments
 		}
 		catch (IOException ex){
 	    System.err.println("Caught IOException: " + ex.getMessage());
@@ -79,9 +92,9 @@ public class FCFSScheduler{
 		
 		
 		sortProcesses();
-		for(int z = 0; z < numberOfProcesses; z++){
+	/*	for(int z = 0; z < numberOfProcesses; z++){
 			System.out.println(z + "is " + processes[z][0] + ":" + processes[z][1]);
-		}
+		}*/	
 		for(int i = 0; i < numberOfProcesses; i++){
 			runAProcess(i);
 		}
